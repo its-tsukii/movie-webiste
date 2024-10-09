@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendations</title>
+    <style>
+        .loggedInUsername {
+            position: fixed;
+            top: 80px;
+            right: 50px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 0px 0px;
+            border-radius: 100px;
+        }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .movie {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .movie h2 {
+            margin-top: 0;
+        }
+
+        .movie img {
+            width: 100%;
+            max-width: 300px; /* Limit maximum width of poster */
+            height: auto;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+        }
+
+        .movie p {
+            margin-bottom: 0.5rem;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Movie Recommendations</h1>
+    </header>
+    <main>
+        <div id="recommendation"></div>
+        <button onclick="getRandomMovie()">Get Movie Recommendations !</button>
+    </main>
+    <div class="loggedInUsername">
+              <button class="btn btn-primary"><a href="index.jsp">  GO TO HOME !</a></button>
+            </div>
+    <script>
+        const movies = [
+            { title: 'Inception', rating: 9, review: 'Mind-bending thriller!', poster: 'https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg' },
+            { title: 'The Shawshank Redemption', rating: 10, review: 'A masterpiece!', poster: 'https://i.pinimg.com/550x/a8/a6/88/a8a68878f73c240aee78a60afce49cd6.jpg' },
+            { title: 'Pulp Fiction', rating: 8, review: 'Quentin Tarantino at his best!', poster: 'https://i.pinimg.com/736x/26/63/37/266337efc0bbee71a8b68ec956f474f5.jpg' },
+            { title: 'The Matrix', rating: 8.7, review: 'Exciting sci-fi action!', poster: 'https://i.pinimg.com/564x/a4/1c/f7/a41cf70646b3d4dfbe38e03c25e6decd.jpg' },
+            { title: 'Jurassic Park', rating: 8.1, review: 'Classic dinosaur adventure!', poster: 'https://i.pinimg.com/564x/8a/cc/43/8acc434a4333aef379c3836950022a78.jpg' },
+            { title: 'Titanic', rating: 7.8, review: 'Epic romance and tragedy!', poster: 'https://i.pinimg.com/736x/3e/de/57/3ede57ee18d44197d7581afdb40c12ca.jpg' },
+            { title: 'Avatar', rating: 7.8, review: 'Visually stunning sci-fi!', poster: 'https://i.pinimg.com/736x/33/b4/f2/33b4f2381034be4c980673bfb2cb6c2a.jpg' },
+            { title: 'The Godfather', rating: 9.2, review: 'Gritty mafia drama!', poster: 'https://i.pinimg.com/originals/7f/bf/39/7fbf396b1234209ed0c887b8b932476f.jpg' },
+            { title: 'Forrest Gump', rating: 8.8, review: 'Heartwarming and inspirational!', poster: 'https://i.pinimg.com/736x/1e/51/8c/1e518c26bcc8bc78a69c70468480ed87.jpg' },
+            { title: 'The Dark Knight', rating: 9.0, review: 'Epic superhero action!', poster: 'https://i.pinimg.com/originals/ea/a2/6e/eaa26e2c3bfa234c3cdd3c4d9fabad35.jpg' },
+            { title: 'Fight Club', rating: 8.8, review: 'Twisted psychological drama!', poster: 'https://i.pinimg.com/736x/d0/92/ce/d092ce78e7d8d43073f47067e28609b7.jpg' }
+            // Add more movies with their titles, ratings, reviews, and poster URLs
+        ];
+        function getRandomMovie() {
+            const recommendation = document.getElementById('recommendation');
+            recommendation.innerHTML = '';
+
+            const randomIndex = Math.floor(Math.random() * movies.length);
+            const randomMovie = movies[randomIndex];
+
+            const movieDiv = document.createElement('div');
+            movieDiv.classList.add('movie');
+            movieDiv.innerHTML = `
+                <h2>${randomMovie.title}</h2>
+                <img src="${randomMovie.poster}" alt="${randomMovie.title} Poster">
+                <p>Rating: ${randomMovie.rating}</p>
+                <p>${randomMovie.review}</p>
+            `;
+            recommendation.appendChild(movieDiv);
+        }
+    </script>
+</body>
+</html>

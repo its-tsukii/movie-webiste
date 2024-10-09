@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Reviewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 2rem;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 0.5rem;
+            margin-right: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        input[type="submit"] {
+            padding: 0.5rem 1rem;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        .movie {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .movie h2 {
+            margin-top: 0;
+        }
+
+        .movie p {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Movie Reviewer</h1>
+    </header>
+    <main>
+        <form id="movieForm">
+            <input type="text" id="titleInput" placeholder="Movie Title" required>
+            <input type="number" id="ratingInput" placeholder="Rating (1-10)" min="1" max="10" required>
+            <textarea id="reviewInput" placeholder="Write your review" rows="4" required></textarea>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+        <div id="recommendations"></div>
+    </main>
+    <script>
+        document.getElementById('movieForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form values
+            const title = document.getElementById('titleInput').value;
+            const rating = parseInt(document.getElementById('ratingInput').value);
+            const review = document.getElementById('reviewInput').value;
+
+            // Clear form inputs
+            document.getElementById('titleInput').value = '';
+            document.getElementById('ratingInput').value = '';
+            document.getElementById('reviewInput').value = '';
+
+            // Display movie recommendation
+            const recommendations = document.getElementById('recommendations');
+            const movieDiv = document.createElement('div');
+            movieDiv.classList.add('movie');
+            movieDiv.innerHTML = `
+                <h2>${title}</h2>
+                <p>Rating: ${rating}/10</p>
+                <p>${review}</p>
+            `;
+            recommendations.appendChild(movieDiv);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deals !</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+	   
+   <style>
+   
+   		.highlight {
+    color: red;
+    font-weight: bold;
+    /* Add any other styling you want */
+}
+   		
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            color: #19c324;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: #d115b8;
+            margin-bottom: 30px;
+        }
+        .movie-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-gap: 20px;
+        }
+        .movie {
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease;
+        }
+        .movie:hover {
+            transform: translateY(-5px);
+        }
+        .movie img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .movie .info {
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .movie h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+        .movie p {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 400;
+            color: #aaa;
+        }
+        .more-info {
+            background-color: rgb(207, 200, 103);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .more-info:hover {
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deals !</h1>
+        <div class="movie-list" id="movieList">
+            <!-- Movie recommendations will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Sample movie data
+        const movies = [
+    {
+        title: "Inception",
+        year: 2010,
+        poster: "https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg",
+        genre: "Action, Adventure, Sci-Fi",
+        rating: 8.8,
+        initialprice: 200,
+        discount: 20,
+        finalprice: 160,
+        director: "Christopher Nolan",
+        plot: "A thief who enters the dreams of others to steal secrets from their subconscious."
+    },
+    {
+        title: "The Shawshank Redemption",
+        year: 1994,
+        poster: "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
+        genre: "Drama",
+        rating: 9.3,
+        initialprice: 100,
+        discount: 10,
+        finalprice: 90,
+        director: "Frank Darabont",
+        plot: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."
+    },
+    {
+        title: "Death Note",
+        year: 2008,
+        poster: "https://i.pinimg.com/736x/2d/6f/05/2d6f054370c886053a1af0fdf7545145.jpg",
+        genre: "Action, Crime, Drama",
+        rating: 9.0,
+        initialprice: 2000,
+        discount: 10,
+        finalprice: 1800,
+        director: "Adam Wingard",
+        plot: "A high school student named Light Turner discovers a mysterious notebook that has the power to kill anyone whose name is written within its pages."
+    },
+    {
+        title: "Dark",
+        year: 2017,
+        poster: "https://i.pinimg.com/550x/6e/e8/9f/6ee89f04a827f1764ef0159216db2262.jpg",
+        genre: "Crime, Drama, Mystery",
+        rating: 8.8,
+        initialprice: 150,
+        discount: 15,
+        finalprice: 127.5,
+        director: "Baran bo Odar, Jantje Friese",
+        plot: "A family saga with a supernatural twist, set in a German town, where the disappearance of two young children exposes the relationships among four families."
+    },
+    {
+        title: "Interstellar",
+        year: 2014,
+        poster: "https://i.pinimg.com/736x/48/ba/ac/48baac2bfb77d0f4fb458123e3d78b89.jpg",
+        genre: "Adventure, Drama, Sci-Fi",
+        rating: 8.6,
+        initialprice: 1800,
+        discount: 20,
+        finalprice: 1440,
+        director: "Christopher Nolan",
+        plot: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival."
+    },
+    {
+        title: "Tenet",
+        year: 2020,
+        poster: "https://image.tmdb.org/t/p/w500/k68nPLbIST6NP96JmTxmZijEvCA.jpg",
+        genre: "Action, Sci-Fi, Thriller",
+        rating: 7.4,
+        initialprice: 250,
+        discount: 10,
+        finalprice: 225,
+        director: "Christopher Nolan",
+        plot: "Armed with only one word, Tenet, and fighting for the survival of the entire world, a Protagonist journeys through a twilight world of international espionage on a mission that will unfold in something beyond real time."
+    },
+    {
+        title: "12 Monkeys",
+        year: 1995,
+        poster: "https://i.pinimg.com/736x/d7/70/b8/d770b8ce1a75bbce129145da0dccd0a8.jpg",
+        genre: "Mystery, Sci-Fi, Thriller",
+        rating: 8.0,
+        initialprice: 1700,
+        discount: 15,
+        finalprice: 1445,
+        director: "Terry Gilliam",
+        plot: "In a future world devastated by disease, a convict is sent back in time to gather information about the man-made virus that wiped out most of the human population on the planet."
+    },
+    {
+        title: "Mahabharat",
+        year: 2013,
+        poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgE4nWzKXhlGJgFqBoEF93ZH6bZdOIHduhUyqpTtN7rw&s",
+        genre: "Action, Adventure, Drama",
+        rating: 8.9,
+        initialprice: 180,
+        discount: 15,
+        finalprice: 153,
+        director: "Ravi Chopra",
+        plot: "The epic tale of the Kurukshetra War."
+    },
+    {
+        title: "Ramayan",
+        year: 1987,
+        poster: "https://i.pinimg.com/236x/cb/4d/e8/cb4de8411b279b3d99107d3f74121f61.jpg",
+        genre: "Action, Adventure, Drama",
+        rating: 9.4,
+        initialprice: 200,
+        discount: 10,
+        finalprice: 180,
+        director: "Ramanand Sagar",
+        plot: "The story of Lord Rama's life and teachings."
+    },
+    {
+        title: "Fight Club",
+        year: 1999,
+        poster: "https://i.pinimg.com/736x/d0/92/ce/d092ce78e7d8d43073f47067e28609b7.jpg",
+        genre: "Drama",
+        rating: 8.8,
+        initialprice: 190,
+        discount: 20,
+        finalprice: 152,
+        director: "David Fincher",
+        plot: "An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more."
+    },
+    {
+        title: "Peaky Blinders",
+        year: 2013,
+        poster: "https://i.pinimg.com/736x/cd/7e/31/cd7e3168c03c52c9bb92ef03434e0cb9.jpg",
+        genre: "Crime, Drama",
+        rating: 8.8,
+        initialprice: 220,
+        discount: 15,
+        finalprice: 187,
+        director: "Steven Knight",
+        plot: "A gangster family epic set in 1919 Birmingham, England, and centered on a gang who sew razor blades in the peaks of their caps, and their fierce boss Tommy Shelby."
+    },
+    {
+        title: "Legend",
+        year: 2015,
+        poster: "https://i.pinimg.com/736x/3a/3a/c0/3a3ac012ef7223a0ec630c12118afba7.jpg",
+        genre: "Biography, Crime, Drama",
+        rating: 6.9,
+        initialprice: 190,
+        discount: 15,
+        finalprice: 161,
+        director: "Brian Helgeland",
+        plot: "Identical twin gangsters Ronald and Reginald Kray terrorize London during the 1960s."
+    },
+    {
+        title: "I Am Legend",
+        year: 2007,
+        poster: "https://i.pinimg.com/236x/cb/74/3d/cb743d1f322036e6e4a1af544ee55e64.jpg",
+        genre: "Action, Adventure, Drama",
+        rating: 7.2,
+        initialprice: 180,
+        discount: 10,
+        finalprice: 162,
+        director: "Francis Lawrence",
+        plot: "Years after a plague kills most of humanity and transforms the rest into monsters, the sole survivor in New York City struggles valiantly to find a cure."
+    }
+    // Add more movie data as needed
+];
+
+
+
+
+        // Function to display movie recommendations
+        function displayMovies() {
+            const movieList = document.getElementById("movieList");
+            movieList.innerHTML = ""; // Clear previous recommendations
+            movies.forEach(movie => {
+                const movieElement = document.createElement("div");
+                movieElement.classList.add("movie");
+                movieElement.innerHTML = `
+                    <img src="${movie.poster}" alt="${movie.title}">
+                    <div class="info">
+                        <h3>${movie.title}</h3>
+                        <p><span class="highlight">Discount(in%): ${movie.discount}</span></p>
+                        <p>Year: ${movie.year}</p>
+                        <p>Genre: ${movie.genre}</p>
+                        <p>Rating: ${movie.rating}</p>
+                        <h1><p>InitialPrice(rs.): ${movie.initialprice}</p><h1>
+                        <p>FinalPrice(rs.): ${movie.finalprice}</p>
+                        <button class="more-info"><a href="ticket.html">Book Now</a></button>
+                    </div>
+                `;
+                movieList.appendChild(movieElement);
+            });
+        }
+
+        // Display initial movie recommendations
+        displayMovies();
+    </script>
+    <a href='index.jsp' align='center' ><font size='30'><p><b><u><i> Go To FilmFiesta.com </i></u></b></p></font></a>
+</body>
+</html>
